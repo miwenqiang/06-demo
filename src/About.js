@@ -10,16 +10,16 @@ class About extends React.Component {
       inputValue:'user name'
     }
   }
- // componentDidMount(){
- //   searchGit()
- //     .then((data) => {
- //       this.setState({
- //         data:data.data,
- //         wait:false
- //
- //       })
- //     })
- // }
+ componentDidMount(){
+   searchGit()
+     .then((data) => {
+       this.setState({
+         data:data.data,
+         wait:false
+
+       })
+     })
+ }
  handleInput(e){
    let value=e.target.value;
    this.setState({
