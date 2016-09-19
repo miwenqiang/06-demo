@@ -10,7 +10,7 @@ function searchGit(userName){
         alert(error);
       });
 }
-export { searchGit };
+
 
 
 function getJson (){
@@ -23,4 +23,17 @@ function getJson (){
       alert(error)
     })
 }
-export { getJson };
+
+
+function getMd (add){
+  let address = `https://raw.githubusercontent.com/miwenqiang/demodata/master/blog/${add}.md`
+  return axios.get(address)
+    .then( (res) =>(
+      {getMd:res.data}
+    ))
+    .catch(function (error) {
+      alert(error)
+    })
+}
+
+export { getJson , searchGit , getMd };

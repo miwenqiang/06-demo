@@ -1,16 +1,39 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes } from 'react';
+
+import marked from 'marked';
+import hljs from 'highlight.js';
+
+import { getMd } from './utils/helpers.js';
+
+
 
 class Blog extends React.Component {
+  constructor(){
+    super();
+    this.state={
+      text:'',
+      wait:true
+    }
+  }
+  componentDidMount(){
+    getMd(this.props.params.title)
+      .then( (rec) => {
+        this.setState({
+          text:rec.getMd,
+          wait:false
+        })
+      })
+  }
   render () {
-    // console.log(this.props);
+    marked.setOptions({
+      highlight: function (code) {
+        return hljs.highlightAuto(code).value;
+      }
+    })
+    let content= this.state.wait ? '请稍等片刻' : marked(this.state.text)
     return(
       <div>
-        {this.props.params.title=='a' ? '我是A页面' :
-          this.props.params.title=='b' ? '我是B页面' :
-          this.props.params.title=='c' ? '我是C页面' :
-          this.props.params.title=='d' ? '我是D页面' :
-          this.props.params.title=='e' ? '我是E页面' : '您访问的页面没有内容'
-        }
+        <div className="post-content" dangerouslySetInnerHTML={{__html:content}}/>
       </div>
     )
   }
